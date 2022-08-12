@@ -1,10 +1,12 @@
 import './css/styles.css';
-import { fetchCountries } from './fetchCountries';
-
+import { fetchCountries } from './js/fetchCountries';
+import { markupContent, cleanMarkup } from './js/renderContent';
 import debounce from 'lodash.debounce';
+
 const DEBOUNCE_DELAY = 300;
-const refs = {
-  input: document.querySelector('#search - box'),
+
+export const refs = {
+  input: document.querySelector('#search-box'),
   list: document.querySelector('.country-list'),
   divInfo: document.querySelector('.country-info'),
 };
@@ -12,10 +14,15 @@ const refs = {
 refs.input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput() {
-  const inputValue = refs.input.value.trim();
+  const inputValue = refs.input.value.trim().toLowerCase();
   if (inputValue === '') {
-    refs.list.innerHTML = '';
+    cleanMarkup();
     return;
   }
-  fetchCountries(inputValue);
+  fetchCountries(inputValue).then(markupContent).catch(catchError);
 }
+
+const catchError = () => {
+  Notify.failure('Oops, there is no country with that name');
+  cleanMarkup();
+};

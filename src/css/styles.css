@@ -18,3 +18,16 @@ body {
   max-width: 320px;
   margin-bottom: 16px;
 }
+.country-list {
+  list-style: none;
+}
+
+.mini_images {
+  width: 30px;
+  height: auto;
+}
+
+.unic_image {
+  width: 40px;
+  height: auto;
+}
