@@ -2,6 +2,7 @@ import './css/styles.css';
 import { fetchCountries } from './js/fetchCountries';
 import { markupContent, cleanMarkup } from './js/renderContent';
 import debounce from 'lodash.debounce';
+import { Notify } from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
@@ -19,7 +20,7 @@ function onInput() {
     cleanMarkup();
     return;
   }
-  fetchCountries(inputValue).then(markupContent).catch(catchError);
+  return fetchCountries(inputValue).then(markupContent).catch(catchError);
 }
 
 const catchError = () => {
