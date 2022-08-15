@@ -13,7 +13,7 @@ function createListItem(data) {
    ${name.official}</h3>
   </li>`;
     })
-    .join();
+    .join("");
   refs.list.innerHTML = markup;
 }
 
@@ -28,7 +28,7 @@ function createUnicItem(data) {
 <p><b>Population</b>: ${population}</p>
 <p><b>Languages</b>: ${Object.values(languages)}</p>`;
     })
-    .join();
+    .join("");
   refs.divInfo.innerHTML = markup;
 }
 export function markupContent(data) {
