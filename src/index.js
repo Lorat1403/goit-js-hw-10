@@ -6,7 +6,7 @@ import { Notify } from 'notiflix';
 
 const DEBOUNCE_DELAY = 300;
 
-export const refs = {
+const refs = {
   input: document.querySelector('#search-box'),
   list: document.querySelector('.country-list'),
   divInfo: document.querySelector('.country-info'),
@@ -15,6 +15,7 @@ export const refs = {
 refs.input.addEventListener('input', debounce(onInput, DEBOUNCE_DELAY));
 
 function onInput() {
+  cleanMarkup();
   const inputValue = refs.input.value.trim().toLowerCase();
   if (inputValue === '') {
     cleanMarkup();

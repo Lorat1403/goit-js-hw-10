@@ -1,29 +1,26 @@
-import { refs } from '../index';
 import { Notify } from 'notiflix';
 
-export function markupContent(data) {
-  if (data.length === 1) {
-    return insertUnicItem(data);
-  }
-  if (data.length >= 2 && data.length <= 10) {
-    return insertContent(data);
-  }
-  if (data.length > 10) {
-    Notify.info('Too many matches found. Please enter a more specific name.');
-    cleanMarkup();
-    return;
-  }
+const refs = {
+  input: document.querySelector('#search-box'),
+  list: document.querySelector('.country-list'),
+  divInfo: document.querySelector('.country-info'),
+};
 
-  const createListItem = item
+function createListItem(data) {
+  const markup = data
     .map(({ flags, name }) => {
-      `<li><h3><span><img class="mini_images" src=${flags.svg} alt="" wigth="30"></span>
+      return `<li><h3><span><img class="mini_images" src=${flags.svg} alt="" wigth="30"></span>
    ${name.official}</h3>
   </li>`;
     })
     .join();
-  const createUnicItem = item
+  refs.list.innerHTML = markup;
+}
+
+function createUnicItem(data) {
+  const markup = data
     .map(({ flags, name, capital, population, languages }) => {
-      `<h2><span><img class ="unic_image" src=${
+      return `<h2><span><img class ="unic_image" src=${
         flags.svg
       } alt="" wigth="40"></span>
  ${name.official}</h2>
@@ -32,16 +29,19 @@ export function markupContent(data) {
 <p><b>Languages</b>: ${Object.values(languages)}</p>`;
     })
     .join();
-
-  const insertContent = array => {
-    const result = createListItem(array);
-    refs.list.insertAdjacentHTML('beforeend', result);
-  };
-
-  const insertUnicItem = array => {
-    const result = createUnicItem(array);
-    refs.divInfo.insertAdjacentHTML('beforeend', result);
-  };
+  refs.divInfo.innerHTML = markup;
+}
+export function markupContent(data) {
+  if (data.length === 1) {
+    createUnicItem(data);
+  }
+  if (data.length >= 2 && data.length <= 10) {
+    createListItem(data);
+  }
+  if (data.length > 10) {
+    Notify.info('Too many matches found. Please enter a more specific name.');
+    cleanMarkup();
+  }
 }
 
 export function cleanMarkup() {
