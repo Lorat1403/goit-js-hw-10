@@ -24,7 +24,7 @@ function onInput() {
   return fetchCountries(inputValue).then(markupContent).catch(catchError);
 }
 
-const catchError = () => {
-  Notify.failure('Oops, there is no country with that name');
+export const catchError = () => {
   cleanMarkup();
+  return Notify.failure('Oops, there is no country with that name');
 };
